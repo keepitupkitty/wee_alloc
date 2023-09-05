@@ -196,6 +196,10 @@ cfg_if! {
     } else if #[cfg(target_arch = "wasm32")] {
         mod imp_wasm32;
         use imp_wasm32 as imp;
+    } else if #[cfg(all(target_os = "linux", target_vendor = "rsec"))] {
+        extern crate syscalls;
+        mod imp_ouma;
+        use imp_ouma as imp;
     } else if #[cfg(unix)] {
         extern crate libc;
         mod imp_unix;
